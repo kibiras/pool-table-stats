@@ -4,13 +4,15 @@ library(dplyr)
 library(magrittr)
 library(DBI)
 library(shinythemes)
+library(dbplyr)
 
 ui <- fluidPage(theme = shinytheme("cyborg"),
                 align="center",
                 h1("Previous game statistics"),
                 tableOutput("lastgame"),
                 h1("Total statistics"),
-                dataTableOutput("tbl")
+                dataTableOutput("tbl"),
+                img(src='diagram.png', align = "center")
 )
 
 server <- function(input, output, session) {
@@ -40,12 +42,14 @@ server <- function(input, output, session) {
     mutate(rank = row_number()) %>%
     select(rank, everything()) -> summary 
 
-  output$tbl <- renderDataTable({
-    summary 
-  })
+  output$tbl <- renderDataTable(
+    summary,
+    options = list(pageLength = 10)
+  )
   output$lastgame <- renderTable({
     summary %>%
-      filter(game_id == max(game_id))
+      filter(game_id == max(game_id)) %>%
+      mutate(completed_shots = as.integer(completed_shots), score = as.integer(score))
   })
   
 }
