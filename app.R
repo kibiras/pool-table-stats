@@ -8,11 +8,11 @@ library(dbplyr)
 
 ui <- fluidPage(theme = shinytheme("cyborg"),
                 align="center",
-                h1("Previous game statistics"),
+                h6("Previous game statistics"),
                 tableOutput("lastgame"),
-                h1("Total statistics"),
+                h4("Total statistics"),
                 dataTableOutput("tbl"),
-                img(src='diagram.png', align = "center")
+                img(src='diagram.png', align = "center", height = "200px")
 )
 
 server <- function(input, output, session) {
