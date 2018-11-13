@@ -12,7 +12,11 @@ ui <- fluidPage(theme = shinytheme("cyborg"),
                 tableOutput("lastgame"),
                 h4("Total statistics"),
                 dataTableOutput("tbl"),
-                img(src='diagram.png', align = "center", height = "200px")
+                splitLayout(
+                            cellWidths = c("25%", "75%"),
+                            img(src='seb.png', align = "center", height = "150px"),
+                            img(src='diagram.png', align = "center", height = "200px"))
+
 )
 
 server <- function(input, output, session) {
