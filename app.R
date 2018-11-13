@@ -44,7 +44,16 @@ server <- function(input, output, session) {
 
   output$tbl <- renderDataTable(
     summary,
-    options = list(pageLength = 10)
+    options = list(pageLength = 10,
+                   rowCallback = I(
+                     'function(row, data) {
+        $("td", row).each(function(i) {
+            if (i != 0) return; 
+            if (parseFloat(data[i]) <= 3)
+                $(this).css("color", "green");
+        });
+    }')
+    )
   )
   output$lastgame <- renderTable({
     summary %>%
