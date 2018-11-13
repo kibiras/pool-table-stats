@@ -48,7 +48,7 @@ server <- function(input, output, session) {
   )
   output$lastgame <- renderTable({
     summary %>%
-      filter(game_id == max(game_id)) %>%
+      filter(game_id == max(game_id) - 1) %>%
       mutate(completed_shots = as.integer(completed_shots), score = as.integer(score))
   })
   
